@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>മണൽ വീഥിയിൽ — Manal Veedhiyil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0f1115;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+        background-color: #FFFFFF;
+        align-items: flex-start;
+      }
+      .figma-frame-container {
+        max-width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+
+    /* 
+      Exact Figma Frame: iPhone 16 - 1 (#5:38)
+      Dimensions: 393px × 852px
+      Aspect Ratio: 393 / 852
+      Clips Content: true (overflow: hidden)
+    */
+    .figma-frame-container {
+      position: relative;
+      width: 100%;
+      max-width: 393px;
+      aspect-ratio: 393 / 852;
+      overflow: hidden;
+      background-color: #FFFFFF;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      container-type: inline-size;
+      user-select: none;
+    }
+
+    /* All absolute layers positioned strictly by Figma x, y, width coordinates */
+    .figma-layer {
+      position: absolute;
+      display: block;
+    }
+
+    /* 1. Background (5:39) -> x: -129, y: 10, w: 652, h: 921 */
+    .layer-background {
+      left: -32.8244%;
+      top: 1.1737%;
+      width: 165.9033%;
+      height: 108.0986%;
+      z-index: 1;
+      pointer-events: none;
+      object-fit: contain;
+    }
+
+    /* 2. Layer 4 (5:40) -> x: -131, y: -131, w: 657, h: 1168 */
+    .layer-4 {
+      left: -33.3333%;
+      top: -15.3756%;
+      width: 167.1756%;
+      height: 137.0892%;
+      z-index: 2;
+      pointer-events: none;
+      object-fit: contain;
+    }
+
+    /* 3. Rectangle 1 (5:41) -> x: -149, y: -17, w: 692, h: 958 */
+    .layer-rectangle-1 {
+      left: -37.9135%;
+      top: -1.9953%;
+      width: 176.0814%;
+      height: 112.4413%;
+      mix-blend-mode: hard-light;
+      z-index: 3;
+      pointer-events: none;
+      object-fit: fill;
+    }
+
+    /* 4. Ellipse 1 (5:44) -> x: -287, y: 386, w: 702, h: 496 */
+    .layer-ellipse-1 {
+      left: -73.0280%;
+      top: 45.3052%;
+      width: 178.6260%;
+      height: 58.2160%;
+      z-index: 4;
+      pointer-events: none;
+      object-fit: contain;
+    }
+
+    /* 5. Inset Video Container (5:55) -> x: 38, y: 81, w: 315, h: 204 */
+    .layer-video-container {
+      left: 9.6692%;
+      top: 9.5070%;
+      width: 80.1527%;
+      height: 23.9437%;
+      background-color: #000000;
+      z-index: 15;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: absolute;
+    }
+
+    .magazine-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      cursor: pointer;
+      background: #000000;
+    }
+
+    /* Clean Play/Pause indicator overlay on tap */
+    .play-indicator-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.25);
+      transition: opacity 0.25s ease, visibility 0.25s;
+      pointer-events: none;
+    }
+
+    .play-indicator-overlay.playing {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .play-icon-badge {
+      width: 52px;
+      height: 52px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .play-icon-badge svg {
+      width: 24px;
+      height: 24px;
+      fill: #ffffff;
+      margin-left: 3px;
+    }
+
+    /* 6. Shape 1 (5:49) -> x: 60, y: 448, w: 35, h: 19 */
+    .layer-shape-1 {
+      left: 15.2672%;
+      top: 52.5822%;
+      width: 8.9059%;
+      height: 2.2300%;
+      opacity: 0.7294;
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    /* 7. Author Text (5:50) -> x: 68, y: 453, w: 106, h: 12 */
+    .layer-author {
+      left: 17.3028%;
+      top: 53.1690%;
+      width: 26.9720%;
+      height: 1.4085%;
+      z-index: 7;
+      color: #000000;
+      font-family: 'Scribe-ML-PazhayaNiyamam', 'Manjari', sans-serif;
+      font-size: calc(13px * (100cqw / 393));
+      line-height: 1;
+      white-space: nowrap;
+      pointer-events: auto;
+    }
+
+    .layer-author img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 8. Layer 6 (5:46) -> x: 46, y: 467, w: 172, h: 132 */
+    .layer-6 {
+      left: 11.7048%;
+      top: 54.8122%;
+      width: 43.7659%;
+      height: 15.4930%;
+      z-index: 8;
+      pointer-events: none;
+      object-fit: contain;
+    }
+
+    /* 9. WhatsApp Image (5:45) -> x: 16, y: 507, w: 410, h: 290 */
+    .layer-whatsapp-image {
+      left: 4.0712%;
+      top: 59.5070%;
+      width: 104.3257%;
+      height: 34.0376%;
+      mix-blend-mode: multiply;
+      z-index: 9;
+      pointer-events: none;
+      object-fit: contain;
+    }
+
+    /* 10. Layer 7 (5:47) -> x: 38, y: 527, w: 195, h: 59 */
+    .layer-7 {
+      left: 9.6692%;
+      top: 61.8545%;
+      width: 49.6183%;
+      height: 6.9249%;
+      z-index: 10;
+      pointer-events: none;
+      object-fit: contain;
+    }
+
+    /* 11. Title Text (5:48) -> x: 52, y: 590, w: 160, h: 17 */
+    .layer-title {
+      left: 13.2316%;
+      top: 69.2488%;
+      width: 40.7125%;
+      height: 1.9953%;
+      z-index: 11;
+      color: #1F180D;
+      font-family: 'Manjari', sans-serif;
+      font-weight: 700;
+      font-size: calc(15.4979px * (100cqw / 393));
+      line-height: 1;
+      white-space: nowrap;
+      pointer-events: auto;
+    }
+
+    .layer-title img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 12. Layer 5 Top (5:54) -> x: 258, y: -105, w: 245.83, h: 278.36 */
+    .layer-5-top {
+      left: 65.6489%;
+      top: -12.3239%;
+      width: 62.5522%;
+      height: 32.6714%;
+      z-index: 12;
+      pointer-events: none;
+      object-fit: contain;
+    }
+
+    /* 13. Layer 5 Bottom (5:52) -> x: -80, y: 695, w: 191, h: 237 */
+    .layer-5-bottom {
+      left: -20.3562%;
+      top: 81.5728%;
+      width: 48.6005%;
+      height: 27.8169%;
+      z-index: 13;
+      pointer-events: none;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Recreated Figma Frame: iPhone 16 - 1 (aspect-ratio: 393 / 852) -->
+  <main class="figma-frame-container" id="frame-5-38" aria-label="Magazine Frame">
+
+    <!-- 1. Background (node 5:39) -->
+    <img
+      class="figma-layer layer-background"
+      src="public/assets/Background.png"
+      alt="Background illustration"
+    />
+
+    <!-- 2. Layer 4 (node 5:40) -->
+    <img
+      class="figma-layer layer-4"
+      src="public/assets/Layer_4.png"
+      alt="Watercolor layer 4"
+    />
+
+    <!-- 3. Rectangle 1 (node 5:41) -->
+    <img
+      class="figma-layer layer-rectangle-1"
+      src="public/assets/Rectangle_1.svg"
+      alt="Hard light color tint"
+    />
+
+    <!-- 4. Ellipse 1 (node 5:44) -->
+    <img
+      class="figma-layer layer-ellipse-1"
+      src="public/assets/Ellipse_1.png"
+      alt="Watercolor ellipse wash"
+    />
+
+    <!-- 5. Inset Video Container (node 5:55) - Play/Pause by pressing the video -->
+    <section class="figma-layer layer-video-container" id="video-box" aria-label="Inset Video: Manal Veedhiyil">
+      <video
+        id="magazine-video"
+        class="magazine-video"
+        playsinline
+        loop
+        preload="auto"
+      >
+        <source src="https://rahdfxnjvefjznhhwpen.supabase.co/storage/v1/object/public/videos/manal_veedhiyil.mp4" type="video/mp4" />
+        <source src="public/assets/manal_veedhiyil.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="play-indicator-overlay" id="play-indicator">
+        <div class="play-icon-badge">
+          <svg viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Shape 1 (node 5:49) -->
+    <img
+      class="figma-layer layer-shape-1"
+      src="public/assets/Shape_1.svg"
+      alt="Author badge backdrop"
+    />
+
+    <!-- 7. Author Text (node 5:50) -->
+    <div class="figma-layer layer-author" title="റഹീസ് വെണ്ണിയൂർ">
+      <img src="public/assets/author_rendered.png" alt="റഹീസ് വെണ്ണിയൂർ" />
+    </div>
+
+    <!-- 8. Layer 6 (node 5:46) -->
+    <img
+      class="figma-layer layer-6"
+      src="public/assets/Layer_6.png"
+      alt="Watercolor splash layer 6"
+    />
+
+    <!-- 9. WhatsApp Image (node 5:45) -->
+    <img
+      class="figma-layer layer-whatsapp-image"
+      src="public/assets/WhatsApp_Image.png"
+      alt="Multiply watercolor art layer"
+    />
+
+    <!-- 10. Layer 7 (node 5:47) -->
+    <img
+      class="figma-layer layer-7"
+      src="public/assets/Layer_7.png"
+      alt="Watercolor layer 7"
+    />
+
+    <!-- 11. Title Text (node 5:48) -->
+    <h1 class="figma-layer layer-title" title="ഈ പൊള്ളും വേനലിൽ">
+      <img src="public/assets/title_rendered.png" alt="ഈ പൊള്ളും വേനലിൽ" />
+    </h1>
+
+    <!-- 12. Layer 5 Top (node 5:54) -->
+    <img
+      class="figma-layer layer-5-top"
+      src="public/assets/Layer_5_top.png"
+      alt="Watercolor foliage layer top"
+    />
+
+    <!-- 13. Layer 5 Bottom (node 5:52) -->
+    <img
+      class="figma-layer layer-5-bottom"
+      src="public/assets/Layer_5_bottom.png"
+      alt="Watercolor foliage layer bottom"
+    />
+
+  </main>
+
+  <script>
+    (function() {
+      const video = document.getElementById('magazine-video');
+      const videoBox = document.getElementById('video-box');
+      const playIndicator = document.getElementById('play-indicator');
+
+      function togglePlayPause() {
+        if (!video) return;
+        if (video.paused) {
+          video.play().then(() => {
+            playIndicator.classList.add('playing');
+          }).catch(err => {
+            console.log('Playback error:', err);
+          });
+        } else {
+          video.pause();
+          playIndicator.classList.remove('playing');
+        }
+      }
+
+      videoBox.addEventListener('click', togglePlayPause);
+      video.addEventListener('play', () => playIndicator.classList.add('playing'));
+      video.addEventListener('pause', () => playIndicator.classList.remove('playing'));
+      video.addEventListener('ended', () => playIndicator.classList.remove('playing'));
+    })();
+  </script>
+</body>
+</html>
