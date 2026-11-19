@@ -25,6 +25,11 @@ const server = http.createServer((req, res) => {
   if (reqPath === '/admin') reqPath = '/admin.html';
 
   let filePath = path.join(ROOT, reqPath);
+
+  // Fallback to public folder if file not directly at root
+  if (!fs.existsSync(filePath) && fs.existsSync(path.join(ROOT, 'public', reqPath))) {
+    filePath = path.join(ROOT, 'public', reqPath);
+  }
   
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {

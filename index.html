@@ -291,42 +291,43 @@
     <!-- 1. Background (node 5:39) -->
     <img
       class="figma-layer layer-background"
-      src="public/assets/Background.png"
+      src="assets/Background.png"
       alt="Background illustration"
     />
 
     <!-- 2. Layer 4 (node 5:40) -->
     <img
       class="figma-layer layer-4"
-      src="public/assets/Layer_4.png"
+      src="assets/Layer_4.png"
       alt="Watercolor layer 4"
     />
 
     <!-- 3. Rectangle 1 (node 5:41) -->
     <img
       class="figma-layer layer-rectangle-1"
-      src="public/assets/Rectangle_1.svg"
+      src="assets/Rectangle_1.svg"
       alt="Hard light color tint"
     />
 
     <!-- 4. Ellipse 1 (node 5:44) -->
     <img
       class="figma-layer layer-ellipse-1"
-      src="public/assets/Ellipse_1.png"
+      src="assets/Ellipse_1.png"
       alt="Watercolor ellipse wash"
     />
 
-    <!-- 5. Inset Video Container (node 5:55) - Play/Pause by pressing the video -->
+    <!-- 5. Inset Video Container (node 5:55) - Autostarts on scan/entry, no loop, tap to play/pause -->
     <section class="figma-layer layer-video-container" id="video-box" aria-label="Inset Video: Manal Veedhiyil">
       <video
         id="magazine-video"
         class="magazine-video"
         playsinline
-        loop
+        autoplay
+        muted
         preload="auto"
       >
         <source src="https://rahdfxnjvefjznhhwpen.supabase.co/storage/v1/object/public/videos/manal_veedhiyil.mp4" type="video/mp4" />
-        <source src="public/assets/manal_veedhiyil.mp4" type="video/mp4" />
+        <source src="assets/manal_veedhiyil.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <div class="play-indicator-overlay" id="play-indicator">
@@ -341,52 +342,52 @@
     <!-- 6. Shape 1 (node 5:49) -->
     <img
       class="figma-layer layer-shape-1"
-      src="public/assets/Shape_1.svg"
+      src="assets/Shape_1.svg"
       alt="Author badge backdrop"
     />
 
     <!-- 7. Author Text (node 5:50) -->
     <div class="figma-layer layer-author" title="റഹീസ് വെണ്ണിയൂർ">
-      <img src="public/assets/author_rendered.png" alt="റഹീസ് വെണ്ണിയൂർ" />
+      <img src="assets/author_rendered.png" alt="റഹീസ് വെണ്ണിയൂർ" />
     </div>
 
     <!-- 8. Layer 6 (node 5:46) -->
     <img
       class="figma-layer layer-6"
-      src="public/assets/Layer_6.png"
+      src="assets/Layer_6.png"
       alt="Watercolor splash layer 6"
     />
 
     <!-- 9. WhatsApp Image (node 5:45) -->
     <img
       class="figma-layer layer-whatsapp-image"
-      src="public/assets/WhatsApp_Image.png"
+      src="assets/WhatsApp_Image.png"
       alt="Multiply watercolor art layer"
     />
 
     <!-- 10. Layer 7 (node 5:47) -->
     <img
       class="figma-layer layer-7"
-      src="public/assets/Layer_7.png"
+      src="assets/Layer_7.png"
       alt="Watercolor layer 7"
     />
 
     <!-- 11. Title Text (node 5:48) -->
     <h1 class="figma-layer layer-title" title="ഈ പൊള്ളും വേനലിൽ">
-      <img src="public/assets/title_rendered.png" alt="ഈ പൊള്ളും വേനലിൽ" />
+      <img src="assets/title_rendered.png" alt="ഈ പൊള്ളും വേനലിൽ" />
     </h1>
 
     <!-- 12. Layer 5 Top (node 5:54) -->
     <img
       class="figma-layer layer-5-top"
-      src="public/assets/Layer_5_top.png"
+      src="assets/Layer_5_top.png"
       alt="Watercolor foliage layer top"
     />
 
     <!-- 13. Layer 5 Bottom (node 5:52) -->
     <img
       class="figma-layer layer-5-bottom"
-      src="public/assets/Layer_5_bottom.png"
+      src="assets/Layer_5_bottom.png"
       alt="Watercolor foliage layer bottom"
     />
 
@@ -398,8 +399,35 @@
       const videoBox = document.getElementById('video-box');
       const playIndicator = document.getElementById('play-indicator');
 
+      // Attempt immediate autoplay on entry/scan
+      function startVideoOnEntry() {
+        if (!video) return;
+        video.muted = true; // Mobile browsers require muted for initial autoplay
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            playIndicator.classList.add('playing');
+          }).catch(err => {
+            console.log('Autoplay deferred until user interaction:', err);
+            playIndicator.classList.remove('playing');
+          });
+        }
+      }
+
+      // Toggle Play / Pause on pressing the video
       function togglePlayPause() {
         if (!video) return;
+
+        // If video ended (since no loop), reset to start
+        if (video.ended) {
+          video.currentTime = 0;
+        }
+
+        // Unmute on first user press so sound plays
+        if (video.muted) {
+          video.muted = false;
+        }
+
         if (video.paused) {
           video.play().then(() => {
             playIndicator.classList.add('playing');
@@ -415,7 +443,17 @@
       videoBox.addEventListener('click', togglePlayPause);
       video.addEventListener('play', () => playIndicator.classList.add('playing'));
       video.addEventListener('pause', () => playIndicator.classList.remove('playing'));
-      video.addEventListener('ended', () => playIndicator.classList.remove('playing'));
+      video.addEventListener('ended', () => {
+        // Video finished (no loop) -> show play indicator to allow re-playing
+        playIndicator.classList.remove('playing');
+      });
+
+      // Start on page load / entry
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        startVideoOnEntry();
+      } else {
+        document.addEventListener('DOMContentLoaded', startVideoOnEntry);
+      }
     })();
   </script>
 </body>

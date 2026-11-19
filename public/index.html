@@ -316,13 +316,14 @@
       alt="Watercolor ellipse wash"
     />
 
-    <!-- 5. Inset Video Container (node 5:55) - Play/Pause by pressing the video -->
+    <!-- 5. Inset Video Container (node 5:55) - Autostarts on scan/entry, no loop, tap to play/pause -->
     <section class="figma-layer layer-video-container" id="video-box" aria-label="Inset Video: Manal Veedhiyil">
       <video
         id="magazine-video"
         class="magazine-video"
         playsinline
-        loop
+        autoplay
+        muted
         preload="auto"
       >
         <source src="https://rahdfxnjvefjznhhwpen.supabase.co/storage/v1/object/public/videos/manal_veedhiyil.mp4" type="video/mp4" />
@@ -398,8 +399,35 @@
       const videoBox = document.getElementById('video-box');
       const playIndicator = document.getElementById('play-indicator');
 
+      // Attempt immediate autoplay on entry/scan
+      function startVideoOnEntry() {
+        if (!video) return;
+        video.muted = true; // Mobile browsers require muted for initial autoplay
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            playIndicator.classList.add('playing');
+          }).catch(err => {
+            console.log('Autoplay deferred until user interaction:', err);
+            playIndicator.classList.remove('playing');
+          });
+        }
+      }
+
+      // Toggle Play / Pause on pressing the video
       function togglePlayPause() {
         if (!video) return;
+
+        // If video ended (since no loop), reset to start
+        if (video.ended) {
+          video.currentTime = 0;
+        }
+
+        // Unmute on first user press so sound plays
+        if (video.muted) {
+          video.muted = false;
+        }
+
         if (video.paused) {
           video.play().then(() => {
             playIndicator.classList.add('playing');
@@ -415,7 +443,17 @@
       videoBox.addEventListener('click', togglePlayPause);
       video.addEventListener('play', () => playIndicator.classList.add('playing'));
       video.addEventListener('pause', () => playIndicator.classList.remove('playing'));
-      video.addEventListener('ended', () => playIndicator.classList.remove('playing'));
+      video.addEventListener('ended', () => {
+        // Video finished (no loop) -> show play indicator to allow re-playing
+        playIndicator.classList.remove('playing');
+      });
+
+      // Start on page load / entry
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        startVideoOnEntry();
+      } else {
+        document.addEventListener('DOMContentLoaded', startVideoOnEntry);
+      }
     })();
   </script>
 </body>
